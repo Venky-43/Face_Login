@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Welcome - Face Recognition System</title>
+  <style>
+    /* Background with dark overlay */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background:
+        linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+        url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+      text-align: center;
+      animation: fadeIn 1.5s ease forwards;
+    }
+
+    h1 {
+      font-size: 3.8rem;
+      margin-bottom: 10px;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.7);
+      letter-spacing: 2px;
+      font-weight: 900;
+    }
+
+    p {
+      font-size: 1.6rem;
+      margin-top: 0;
+      font-weight: 500;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+      color: #dbe9ff;
+    }
+
+    /* Subtle fade-in animation */
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2.8rem;
+      }
+      p {
+        font-size: 1.2rem;
+      }
+      body {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome, {{ user.username }}</h1>
+  <p>Email: {{ user.email }}</p>
+</body>
+</html>
