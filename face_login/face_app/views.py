@@ -20,7 +20,7 @@ def register(request):
             user.save()
 
             messages.success(request, 'Registered successfully!')
-            return redirect('login')  # Or wherever you want to redirect
+            return redirect('success')  
     else:
         form = RegisterForm()
     return render(request, 'register.html', {'form': form})
@@ -35,8 +35,12 @@ from django.shortcuts import render
 from .models import UserProfile
 
 def login_view(request):
+    import numpy as np
+
     video = cv2.VideoCapture(0)
-    time.sleep(1)  # Let the camera warm up
+    video.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))  
+    time.sleep(1)
+
     known_encodings = []
     known_users = []
 
@@ -55,11 +59,7 @@ def login_view(request):
         try:
             bgr_image = cv2.imread(image_path)
 
-            if bgr_image is None:
-                print(f"Warning: Could not load image (cv2.imread returned None) for user {user.username}")
-                continue
-
-            if bgr_image.ndim != 3 or bgr_image.shape[2] != 3:
+            if bgr_image is None or bgr_image.ndim != 3 or bgr_image.shape[2] != 3:
                 print(f"Warning: Invalid image format for {user.username}")
                 continue
 
@@ -71,7 +71,6 @@ def login_view(request):
                 known_users.append(user)
             else:
                 print(f"Warning: No face found in image for user {user.username}")
-
         except Exception as e:
             print(f"Error processing image for {user.username}: {e}")
             continue
@@ -85,11 +84,14 @@ def login_view(request):
             break
 
         try:
-            if frame.ndim != 3 or frame.shape[2] != 3:
-                print("Invalid frame format. Skipping.")
+            
+            if frame.dtype != np.uint8 or frame.ndim != 3 or frame.shape[2] != 3:
+                print(f"Skipping invalid frame: dtype={frame.dtype}, shape={frame.shape}")
                 continue
 
             rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+            
             face_locations = face_recognition.face_locations(rgb_frame)
             face_encodings = face_recognition.face_encodings(rgb_frame, face_locations)
 
@@ -126,3 +128,5 @@ def home(request):
 
 def landing(request):
     return render(request, 'landing.html')
+def success(request):
+    return render(request,'success.html')
