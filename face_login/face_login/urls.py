@@ -23,7 +23,7 @@ from face_app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('face_a/', include('face_app.urls')),
+    path('', include('face_app.urls')),
     #path(' ',views.landing)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
